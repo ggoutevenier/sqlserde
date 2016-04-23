@@ -1,0 +1,28 @@
+<beans>
+	<bean id="infile" library="/home/oracle/workspace/CSVSerde/Debug/libCSVSerde.so" maker="makeIfstream"/>
+	<bean id="cout" library="/home/oracle/workspace/CSVSerde/Debug/libCSVSerde.so" maker="makeCout"/>
+	<bean id="in" library="/home/oracle/workspace/CSVSerde/Debug/libCSVSerde.so" maker="makeCsvDeserializer">
+		<properties>
+			<property name="ifile" ref="infile"/>
+		</properties>
+	</bean>
+	<bean id="display" library="/home/oracle/workspace/CSVSerde/Debug/libCSVSerde.so" maker="makeCsvSerializer">
+		<properties>
+			<property name="ofile" ref="cout"/>
+		</properties>
+	</bean>
+	<bean id="sqliteDriver" library="/home/oracle/workspace/SQLite/Debug/libSQLite.so" maker="makeDriver"/>
+	<bean id="sqliteConnection" library="/home/oracle/workspace/SQLite/Debug/libSQLite.so" maker="makeConnection">
+		<properties>
+			<property name="driver" ref="sqliteDriver"/>
+			<property name="url"	value=""/>
+		</properties>
+	</bean>
+	<bean id="sqliteDialect" library="/home/oracle/workspace/SQLite/Debug/libSQLite.so" maker="makeDialect"/>
+	<bean id="sql" library="/home/oracle/workspace/SQLSerde/Debug/libSQLSerde.so" maker="makeSqlSerde">
+		<properties>
+			<property name="connection" ref="sqliteConnection"/>
+			<property name="dialect" ref="sqliteDialect"/>
+		</properties>
+	</bean>
+</beans>
